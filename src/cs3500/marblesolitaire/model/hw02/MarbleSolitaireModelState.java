@@ -6,12 +6,6 @@ package cs3500.marblesolitaire.model.hw02;
  */
 public interface MarbleSolitaireModelState {
   /**
-   * This enum represents the state of a single slot on the board. Every slot
-   * can either be empty, have a marble, or be an invalid position
-   */
-  enum SlotState { Empty, Marble, Invalid }
-
-  /**
    * Return the size of this board. The size is roughly the longest dimension of a board
    *
    * @return the size as an integer
@@ -25,7 +19,7 @@ public interface MarbleSolitaireModelState {
    * @param col the column of the position sought, starting at 0
    * @return the state of the slot at the given row and column
    * @throws IllegalArgumentException if the row or the column are beyond
-   *         the dimensions of the board
+   *                                  the dimensions of the board
    */
   SlotState getSlotAt(int row, int col) throws IllegalArgumentException;
 
@@ -35,4 +29,10 @@ public interface MarbleSolitaireModelState {
    * @return the number of marbles currently on the board
    */
   int getScore();
+
+  /**
+   * This enum represents the state of a single slot on the board. Every slot
+   * can either be empty, have a marble, or be an invalid position
+   */
+  enum SlotState { Empty, Marble, Invalid }
 }

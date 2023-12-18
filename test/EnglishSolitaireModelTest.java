@@ -1,6 +1,8 @@
-package cs3500.marblesolitaire.model.hw02;
-
 import org.junit.Test;
+
+import cs3500.marblesolitaire.model.hw02.EnglishSolitaireModel;
+import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
+import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelState;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,14 +10,15 @@ import static org.junit.Assert.assertEquals;
  * Tests for {@link EnglishSolitaireModel}.
  */
 public class EnglishSolitaireModelTest {
-  static MarbleSolitaireModel threeESM = new EnglishSolitaireModel();
-  static MarbleSolitaireModel threeESMDupe = new EnglishSolitaireModel();
-  static MarbleSolitaireModel threeESMTopRight = new EnglishSolitaireModel(0, 2);
-  static MarbleSolitaireModel fiveESM = new EnglishSolitaireModel(5);
-  static MarbleSolitaireModel sevenESM = new EnglishSolitaireModel(7);
-  static MarbleSolitaireModel fiveESMOffCenter
+  MarbleSolitaireModel threeESM = new EnglishSolitaireModel();
+  MarbleSolitaireModel threeESMDupe = new EnglishSolitaireModel();
+  MarbleSolitaireModel threeESMTopRight
+          = new EnglishSolitaireModel(0, 2);
+  MarbleSolitaireModel fiveESM = new EnglishSolitaireModel(5);
+  MarbleSolitaireModel sevenESM = new EnglishSolitaireModel(7);
+  MarbleSolitaireModel fiveESMOffCenter
           = new EnglishSolitaireModel(5, 4, 4);
-  static MarbleSolitaireModel threeESMMove = new EnglishSolitaireModel();
+  MarbleSolitaireModel threeESMMove = new EnglishSolitaireModel();
 
 
   /**
@@ -241,6 +244,7 @@ public class EnglishSolitaireModelTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void esmArmThicknessConstructorDisallowsThicknessOfOne() {
+
     new EnglishSolitaireModel(1);
   }
 
@@ -250,6 +254,7 @@ public class EnglishSolitaireModelTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void esmArmThicknessConstructorDisallowsEvenNumber() {
+
     new EnglishSolitaireModel(6);
   }
 
@@ -463,7 +468,6 @@ public class EnglishSolitaireModelTest {
             threeESMTopRight.getSlotAt(0, 3));
     assertEquals(MarbleSolitaireModelState.SlotState.Empty,
             threeESMTopRight.getSlotAt(0, 4));
-
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -546,6 +550,46 @@ public class EnglishSolitaireModelTest {
     threeESMDupe.move(3, 5, 3, 3);
     assertEquals(1, threeESMDupe.getScore());
     assertEquals(true, threeESMDupe.isGameOver());
+  }
+
+  /**
+   * Test that the move method disallows moving from a nonexistent position.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void moveDisallowsNonexistentFromPosition() {
+    threeESM.move(8, 7, 3, 3);
+  }
+
+  /**
+   * Test that the move method disallows moving to a nonexistent position.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void moveDisallowsNonexistentToPosition() {
+    threeESM.move(3, 5, 7, 8);
+  }
+
+  /**
+   * Test that the move method disallows moving from an empty slot position.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void moveDisallowsEmptyFromPosition() {
+    threeESM.move(3, 3, 7, 8);
+  }
+
+  /**
+   * Test that the move method disallows jumping over an empty slot position.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void moveDisallowsJumpingOverEmptySlot() {
+    threeESMTopRight.move(0, 2, 0, 4);
+  }
+
+  /**
+   * Test that the move method disallows moving to a position that is more than two slots away.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void moveDisallowsMoreThanTwoPositionsApart() {
+    threeESMTopRight.move(3, 4,0,4);
   }
 
   /**
